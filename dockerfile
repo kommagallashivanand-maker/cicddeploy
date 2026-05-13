@@ -1,20 +1,21 @@
-# Use Node image
-FROM node:20
+# Build Stage
+FROM node:20-alpine AS build
 
-# Working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy all files
 COPY . .
 
-# Expose Vite port
-EXPOSE 5173
+RUN npm run build
 
-# Start Vite server
-CMD ["npm", "run", "dev", "--", "--host"]
+# Production Stage
+FROM nginx:alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
