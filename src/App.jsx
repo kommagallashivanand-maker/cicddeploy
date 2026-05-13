@@ -5,6 +5,7 @@ function Counter() {
 
   return (  //counter  done done done 
     <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>HI ra kanna how are you</h1>
       <h1>Counter: {count}</h1>
 
       <button onClick={() => setCount(count + 1)}>
